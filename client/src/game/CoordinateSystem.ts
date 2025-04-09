@@ -22,8 +22,8 @@ export class CoordinateSystem {
     this.hexSide = hexHeight / 2;
     
     // Calculate ideal hex grid spacing based on SVG dimensions
-    // Use increased horizontal spacing to prevent overlaps
-    this.hexHorizSpacing = 108;  // Increased horizontal spacing (from 96 to 108)
+    // Use much wider horizontal spacing to prevent overlaps completely
+    this.hexHorizSpacing = 140;  // Significantly increased horizontal spacing
     this.hexVertSpacing = 84;    // Vertical spacing between centers (0.75 * hexHeight)
   }
   

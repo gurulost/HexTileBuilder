@@ -25,6 +25,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/game-spread', (req, res) => {
     res.sendFile('game-spread.html', { root: './client/public' });
   });
+  
+  // Add a route for our much wider spread hexagonal grid
+  app.get('/game-wide-spread', (req, res) => {
+    res.sendFile('game-wide-spread.html', { root: './client/public' });
+  });
 
   // use storage to perform CRUD operations on the storage interface
   // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
