@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.5D Isometric Hexagonal Tile Map</title>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #2a2a2a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #game-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container"></div>
+
+  <script>
+    // Define our game configuration
+    const config = {
+      type: Phaser.AUTO,
+      width: window.innerWidth,
+      height: window.innerHeight,
+      backgroundColor: '#3498db', // Sky blue background
+      parent: 'game-container',
+      scene: {
+        preload: preload,
+        create: create
+      },
+      scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+      }
+    };
+
+    // Define tile types
+    const TerrainTileType = {
+      GRASS: 'grass',
+      FOREST: 'forest',
+      MOUNTAIN: 'mountain',
+      DESERT: 'desert',
+      WATER: 'water'
+    };
+
+    const FeatureTileType = {
+      FRUIT: 'fruit',
+      ANIMALS: 'animals',
+      MINERALS: 'minerals',
+      RUINS: 'ruins',
+      VILLAGE: 'village'
+    };
+
+    // Create the game instance
+    const game = new Phaser.Game(config);
+
+    // Configuration parameters
+    const hexWidth = 128;
+    const hexHeight = 112; 
+    const tileOffset = 0.75;
+    const mapWidth = 10;
+    const mapHeight = 10;
+
+    // Preload function for loading assets
+    function preload() {
+      console.log("Preloading assets...");
+      
+      // Load terrain tiles
+      Object.values(TerrainTileType).forEach(type => {
+        const path = `/assets/tiles/${type}_hex.svg`;
+        console.log(`Loading terrain tile: ${path}`);
+        this.load.svg(type, path);
+      });
+      
+      // Load feature/resource tiles
+      Object.values(FeatureTileType).forEach(type => {
+        const path = `/assets/tiles/${type}_hex.svg`;
+        console.log(`Loading feature tile: ${path}`);
+        this.load.svg(type, path);
+      });
+    }
+
+    // Create function for setting up the game
+    function create() {
+      console.log("Creating scene...");
+      const gameWidth = this.sys.game.config.width;
+      const gameHeight = this.sys.game.config.height;
+      console.log(`Game dimensions: ${gameWidth}x${gameHeight}`);
+      
+      // Calculate center offset
+      const mapCenterX = gameWidth / 2;
+      const mapCenterY = gameHeight / 3;
+      console.log(`Map center position: (${mapCenterX}, ${mapCenterY})`);
+      
+      // Generate a simple tile map (5x5 for testing)
+      const tileMap = generateSimpleTileMap(5, 5);
+      console.log("Tile map generated:", tileMap);
+      
+      // Render the base terrain tiles first
+      console.log("Rendering terrain tiles...");
+      tileMap.terrain.forEach((row, y) => {
+        row.forEach((tileType, x) => {
+          // Calculate hex position with offset
+          const { posX, posY } = calculateHexPosition(x, y);
+          
+          try {
+            // Create the tile sprite
+            const tile = this.add.image(
+              mapCenterX + posX, 
+              mapCenterY + posY, 
+              tileType
+            ).setOrigin(0.5, 0.5).setDepth(y);
+            
+            // Make tiles interactive
+            tile.setInteractive();
+            tile.on('pointerover', () => {
+              tile.setTint(0xdddddd);
+            });
+            tile.on('pointerout', () => {
+              tile.clearTint();
+            });
+            tile.on('pointerdown', () => {
+              console.log(`Tile clicked at (${x}, ${y}), type: ${tileType}`);
+            });
+          } catch (error) {
+            console.error(`Error rendering tile at (${x}, ${y}):`, error);
+          }
+        });
+      });
+      
+      // Render the feature tiles
+      console.log("Rendering feature tiles...");
+      tileMap.features.forEach((feature) => {
+        if (feature) {
+          try {
+            const { x, y, type } = feature;
+            const { posX, posY } = calculateHexPosition(x, y);
+            
+            // Create the feature sprite
+            this.add.image(
+              mapCenterX + posX,
+              mapCenterY + posY,
+              type
+            ).setOrigin(0.5, 0.5).setDepth(y + 0.1);
+          } catch (error) {
+            console.error("Error rendering feature:", error);
+          }
+        }
+      });
+      
+      // Add instructions text
+      this.add.text(16, 16, 'Isometric Hex Tile Map', { 
+        fontSize: '24px',
+        color: '#ffffff',
+        backgroundColor: '#00000088',
+        padding: { x: 10, y: 5 }
+      }).setScrollFactor(0).setDepth(100);
+    }
+
+    // Calculate hex position with offset
+    function calculateHexPosition(x, y) {
+      const offsetX = hexWidth * tileOffset;
+      const isOddRow = y % 2 === 1;
+      
+      let posX = x * offsetX;
+      let posY = y * (hexHeight * 0.75);
+      
+      if (isOddRow) {
+        posX += offsetX / 2;
+      }
+      
+      return { posX, posY };
+    }
+
+    // Generate a simple tile map for testing
+    function generateSimpleTileMap(width, height) {
+      const terrain = [];
+      const features = [];
+      
+      // Generate terrain
+      for (let y = 0; y < height; y++) {
+        const row = [];
+        for (let x = 0; x < width; x++) {
+          // Simple pattern - cycle through terrain types
+          const index = (x + y) % 5;
+          const terrainTypes = Object.values(TerrainTileType);
+          row.push(terrainTypes[index]);
+          
+          // Add some features randomly (20% chance)
+          if (Math.random() < 0.2) {
+            const featureTypes = Object.values(FeatureTileType);
+            const randomFeature = featureTypes[Math.floor(Math.random() * featureTypes.length)];
+            features.push({
+              x,
+              y,
+              type: randomFeature
+            });
+          }
+        }
+        terrain.push(row);
+      }
+      
+      return { terrain, features };
+    }
+
+    // Handle window resizing
+    window.addEventListener('resize', () => {
+      game.scale.resize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
