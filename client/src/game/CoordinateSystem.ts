@@ -21,10 +21,10 @@ export class CoordinateSystem {
     this.hexHeight = hexHeight;
     this.hexSide = hexHeight / 2;
     
-    // Calculate standard hex grid spacing
-    // These values create a perfect hexagonal grid with the SVG tiles
-    this.hexHorizSpacing = hexWidth * 3/4;  // Horizontal distance between hex centers
-    this.hexVertSpacing = hexHeight;        // Vertical distance between hex centers
+    // Calculate ideal hex grid spacing based on SVG dimensions
+    // Use increased horizontal spacing to prevent overlaps
+    this.hexHorizSpacing = 108;  // Increased horizontal spacing (from 96 to 108)
+    this.hexVertSpacing = 84;    // Vertical spacing between centers (0.75 * hexHeight)
   }
   
   /**
