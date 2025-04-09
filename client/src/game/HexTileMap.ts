@@ -18,12 +18,12 @@ export class HexTileMap {
   public coordSystem: CoordinateSystem;
   public mapGenerator: MapGenerator;
   
-  // Configuration Parameters - also made public
-  public hexWidth: number = 128;
-  public hexHeight: number = 110; // Slightly reduced to prevent vertical overlap
-  public mapWidth: number = 10; // Number of horizontal tiles
-  public mapHeight: number = 10; // Number of vertical tiles
-  public tileOffset: number = 0.78; // Increased slightly for better horizontal spacing
+  // Configuration Parameters - using standard hex grid dimensions for perfect alignment
+  public hexWidth: number = 128;  // Width of hex in pixels
+  public hexHeight: number = 112; // Height of hex in pixels - standard for our SVG tiles
+  public mapWidth: number = 10;   // Number of horizontal tiles
+  public mapHeight: number = 10;  // Number of vertical tiles
+  public tileOffset: number = 0;  // Legacy parameter, not used in new coordinate system
 
   constructor(container: HTMLElement) {
     this.coordSystem = new CoordinateSystem(this.hexWidth, this.hexHeight, this.tileOffset);
@@ -204,9 +204,9 @@ export class HexTileMap {
               };
             } else {
               console.error("Global hexTileMapInstance not available");
-              // Use default values as fallback with our optimized parameters
+              // Use default values as fallback with our standard hex grid parameters
               this.scene.settings.data = {
-                coordSystem: new CoordinateSystem(128, 110, 0.78),
+                coordSystem: new CoordinateSystem(128, 112, 0),
                 mapGenerator: new MapGenerator(),
                 mapWidth: 10,
                 mapHeight: 10

@@ -6,9 +6,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // put application routes here
   // prefix all routes with /api
 
-  // Add a route for our standalone game page
+  // Add routes for our game implementations
   app.get('/game', (req, res) => {
     res.sendFile('game.html', { root: './client/public' });
+  });
+  
+  // Add a route for our perfected hexagonal grid implementation
+  app.get('/game-perfect', (req, res) => {
+    res.sendFile('game-perfect.html', { root: './client/public' });
   });
 
   // use storage to perform CRUD operations on the storage interface

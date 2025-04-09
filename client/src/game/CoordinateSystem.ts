@@ -1,63 +1,56 @@
 /**
  * Handles the coordinate system for hexagonal grid
- * Implements offset-coordinate logic for proper placement of hexagons
+ * Implements standard offset-coordinate logic (odd-q) for proper placement of hexagons
  */
 export class CoordinateSystem {
   private hexWidth: number;
   private hexHeight: number;
-  private tileOffset: number;
+  private hexSide: number;
+  private hexHorizSpacing: number;
+  private hexVertSpacing: number;
   
   /**
-   * Creates a coordinate system for hexagonal tiles
+   * Creates a coordinate system for hexagonal tiles using standard hex grid math
    * 
    * @param hexWidth - Width of hexagon tile in pixels
    * @param hexHeight - Height of hexagon tile in pixels
-   * @param tileOffset - Horizontal offset factor (percentage of hexWidth)
+   * @param tileOffset - Unused parameter kept for backward compatibility
    */
   constructor(hexWidth: number, hexHeight: number, tileOffset: number) {
     this.hexWidth = hexWidth;
     this.hexHeight = hexHeight;
-    this.tileOffset = tileOffset;
+    this.hexSide = hexHeight / 2;
+    
+    // Calculate standard hex grid spacing
+    // These values create a perfect hexagonal grid with the SVG tiles
+    this.hexHorizSpacing = hexWidth * 3/4;  // Horizontal distance between hex centers
+    this.hexVertSpacing = hexHeight;        // Vertical distance between hex centers
   }
   
   /**
-   * Calculates the isometric position for a hex tile at grid coordinates (x, y)
-   * Uses offset-coordinate system for hexagonal grids
+   * Calculates the isometric position for a hex tile at grid coordinates (q, r)
+   * Uses standard odd-q offset-coordinate system for hexagonal grids
    * 
-   * @param x - The x coordinate in the grid
-   * @param y - The y coordinate in the grid
+   * @param q - The column coordinate in the grid
+   * @param r - The row coordinate in the grid
    * @returns Position coordinates {posX, posY} for the tile
    */
-  calculateIsometricPosition(x: number, y: number): { posX: number, posY: number } {
-    // Calculate horizontal offset using the optimized tileOffset value
-    const offsetX = this.hexWidth * this.tileOffset;
+  calculateIsometricPosition(q: number, r: number): { posX: number, posY: number } {
+    // Using standard odd-q offset coordinate system
+    let posX = q * this.hexHorizSpacing;
+    let posY = r * this.hexVertSpacing;
     
-    // Calculate vertical spacing with an offset for even/odd rows
-    // This creates the proper "brick" pattern for hexes
-    const isOddRow = y % 2 === 1;
-    
-    // Calculate base position with fine-tuned values
-    let posX = x * offsetX;
-    
-    // Using exactly 75% of hexHeight for vertical spacing
-    // The optimized hexHeight value should create perfect alignment
-    let posY = y * (this.hexHeight * 0.75);
-    
-    // Apply offset for odd rows
-    if (isOddRow) {
-      posX += offsetX / 2;
+    // Offset odd rows (critical for proper hex grid alignment)
+    if (r % 2 === 1) {
+      posX += this.hexHorizSpacing / 2;
     }
     
-    // Return the calculated position (no additional transforms needed)
-    return {
-      posX: posX,
-      posY: posY
-    };
+    return { posX, posY };
   }
   
   /**
    * Converts screen coordinates to grid coordinates
-   * Useful for implementing click/touch interactions
+   * Uses the inverse of the odd-q coordinate system calculation
    * 
    * @param screenX - X position on screen
    * @param screenY - Y position on screen
@@ -70,19 +63,17 @@ export class CoordinateSystem {
     const relativeX = screenX - originX;
     const relativeY = screenY - originY;
     
-    // Calculate using the same parameters from calculateIsometricPosition
+    // Approximate row (r) based on vertical position
+    const approxRow = Math.round(relativeY / this.hexVertSpacing);
     
-    // Approximate row (y) based on vertical position
-    const approxRow = Math.round(relativeY / (this.hexHeight * 0.75));
-    const isOddRow = approxRow % 2 === 1;
-    
-    // Calculate column (x) based on horizontal position, adjusting for row offset
-    let approxCol;
-    if (isOddRow) {
-      approxCol = Math.round((relativeX - this.hexWidth * this.tileOffset / 2) / (this.hexWidth * this.tileOffset));
-    } else {
-      approxCol = Math.round(relativeX / (this.hexWidth * this.tileOffset));
+    // Adjust x for the row offset (odd rows are shifted)
+    let adjustedX = relativeX;
+    if (approxRow % 2 === 1) {
+      adjustedX -= this.hexHorizSpacing / 2;
     }
+    
+    // Approximate column (q) based on horizontal position
+    const approxCol = Math.round(adjustedX / this.hexHorizSpacing);
     
     return {
       gridX: Math.max(0, approxCol),
