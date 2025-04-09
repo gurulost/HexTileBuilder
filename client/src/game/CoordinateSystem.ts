@@ -38,7 +38,9 @@ export class CoordinateSystem {
     
     // Calculate base position
     let posX = x * offsetX;
-    let posY = y * (this.hexHeight * 0.75); // 75% of height for proper vertical spacing
+    // Apply a small vertical adjustment (-2px) to tighten up the grid
+    // This helps eliminate gaps between tiles
+    let posY = y * (this.hexHeight * 0.75) - 2; 
     
     // Apply offset for odd rows
     if (isOddRow) {
@@ -68,8 +70,11 @@ export class CoordinateSystem {
     const relativeX = screenX - originX;
     const relativeY = screenY - originY;
     
+    // Adjust for the vertical offset (-2px) we added in calculateIsometricPosition
+    const adjustedRelativeY = relativeY + 2;
+    
     // Approximate row (y) based on vertical position
-    const approxRow = Math.round(relativeY / (this.hexHeight * 0.75));
+    const approxRow = Math.round(adjustedRelativeY / (this.hexHeight * 0.75));
     const isOddRow = approxRow % 2 === 1;
     
     // Calculate column (x) based on horizontal position, adjusting for row offset

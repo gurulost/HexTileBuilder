@@ -178,8 +178,10 @@
       const offsetX = hexWidth * tileOffset;
       const isOddRow = y % 2 === 1;
       
+      // Fine-tuned positioning with vertical adjustment to prevent gaps
       let posX = x * offsetX;
-      let posY = y * (hexHeight * 0.75);
+      // Apply a small vertical adjustment (-2px) to tighten up the grid
+      let posY = y * (hexHeight * 0.75) - 2; 
       
       if (isOddRow) {
         posX += offsetX / 2;
