@@ -15,6 +15,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/game-perfect', (req, res) => {
     res.sendFile('game-perfect.html', { root: './client/public' });
   });
+  
+  // Add a route for our final precisely aligned hexagonal grid
+  app.get('/game-perfect-final', (req, res) => {
+    res.sendFile('game-perfect-final.html', { root: './client/public' });
+  });
 
   // use storage to perform CRUD operations on the storage interface
   // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
