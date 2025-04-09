@@ -20,10 +20,10 @@ export class HexTileMap {
   
   // Configuration Parameters - also made public
   public hexWidth: number = 128;
-  public hexHeight: number = 112; // Adjusted for isometric perspective (height:width ratio ~0.875)
+  public hexHeight: number = 110; // Slightly reduced to prevent vertical overlap
   public mapWidth: number = 10; // Number of horizontal tiles
   public mapHeight: number = 10; // Number of vertical tiles
-  public tileOffset: number = 0.75; // Horizontal offset for adjacent hexes (percentage of tile width)
+  public tileOffset: number = 0.78; // Increased slightly for better horizontal spacing
 
   constructor(container: HTMLElement) {
     this.coordSystem = new CoordinateSystem(this.hexWidth, this.hexHeight, this.tileOffset);
@@ -204,9 +204,9 @@ export class HexTileMap {
               };
             } else {
               console.error("Global hexTileMapInstance not available");
-              // Use default values as fallback
+              // Use default values as fallback with our optimized parameters
               this.scene.settings.data = {
-                coordSystem: new CoordinateSystem(128, 112, 0.75),
+                coordSystem: new CoordinateSystem(128, 110, 0.78),
                 mapGenerator: new MapGenerator(),
                 mapWidth: 10,
                 mapHeight: 10

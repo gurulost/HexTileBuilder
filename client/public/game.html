@@ -72,8 +72,8 @@
 
     // Configuration parameters
     const hexWidth = 128;
-    const hexHeight = 112; 
-    const tileOffset = 0.75;
+    const hexHeight = 110; // Slightly reduced to prevent vertical overlap
+    const tileOffset = 0.78; // Increased slightly for better horizontal spacing
     const mapWidth = 10;
     const mapHeight = 10;
 
@@ -178,10 +178,12 @@
       const offsetX = hexWidth * tileOffset;
       const isOddRow = y % 2 === 1;
       
-      // Fine-tuned positioning with vertical adjustment to prevent gaps
+      // Fine-tuned positioning calculations for perfectly aligned hexagons
       let posX = x * offsetX;
-      // Apply a small vertical adjustment (-2px) to tighten up the grid
-      let posY = y * (hexHeight * 0.75) - 2; 
+      
+      // Use exactly 75% of hexHeight for vertical spacing (no adjustment needed now)
+      // With our modified values this should create a perfect fit
+      let posY = y * (hexHeight * 0.75); 
       
       if (isOddRow) {
         posX += offsetX / 2;

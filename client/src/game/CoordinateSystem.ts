@@ -29,26 +29,26 @@ export class CoordinateSystem {
    * @returns Position coordinates {posX, posY} for the tile
    */
   calculateIsometricPosition(x: number, y: number): { posX: number, posY: number } {
-    // Calculate horizontal offset (75% of tile width for proper hex alignment)
+    // Calculate horizontal offset using the optimized tileOffset value
     const offsetX = this.hexWidth * this.tileOffset;
     
     // Calculate vertical spacing with an offset for even/odd rows
     // This creates the proper "brick" pattern for hexes
     const isOddRow = y % 2 === 1;
     
-    // Calculate base position
+    // Calculate base position with fine-tuned values
     let posX = x * offsetX;
-    // Apply a small vertical adjustment (-2px) to tighten up the grid
-    // This helps eliminate gaps between tiles
-    let posY = y * (this.hexHeight * 0.75) - 2; 
+    
+    // Using exactly 75% of hexHeight for vertical spacing
+    // The optimized hexHeight value should create perfect alignment
+    let posY = y * (this.hexHeight * 0.75);
     
     // Apply offset for odd rows
     if (isOddRow) {
       posX += offsetX / 2;
     }
     
-    // Apply isometric projection transformations
-    // This takes our grid and skews it to create the isometric look
+    // Return the calculated position (no additional transforms needed)
     return {
       posX: posX,
       posY: posY
@@ -70,11 +70,10 @@ export class CoordinateSystem {
     const relativeX = screenX - originX;
     const relativeY = screenY - originY;
     
-    // Adjust for the vertical offset (-2px) we added in calculateIsometricPosition
-    const adjustedRelativeY = relativeY + 2;
+    // Calculate using the same parameters from calculateIsometricPosition
     
     // Approximate row (y) based on vertical position
-    const approxRow = Math.round(adjustedRelativeY / (this.hexHeight * 0.75));
+    const approxRow = Math.round(relativeY / (this.hexHeight * 0.75));
     const isOddRow = approxRow % 2 === 1;
     
     // Calculate column (x) based on horizontal position, adjusting for row offset
