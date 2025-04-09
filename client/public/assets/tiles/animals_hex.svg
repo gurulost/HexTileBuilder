@@ -1,0 +1,46 @@
+<svg width="128" height="112" viewBox="0 0 128 112" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon Path - mostly transparent -->
+  <path d="M64 0L128 32V80L64 112L0 80V32L64 0Z" fill="none"/>
+  
+  <!-- Animals (deer) -->
+  <g transform="translate(64, 56)">
+    <!-- First deer -->
+    <g transform="translate(-15, 0) scale(0.8)">
+      <!-- Body -->
+      <ellipse cx="0" cy="0" rx="15" ry="8" fill="#b08968"/>
+      
+      <!-- Head -->
+      <circle cx="12" cy="-5" r="6" fill="#b08968"/>
+      
+      <!-- Legs -->
+      <rect x="-10" y="0" width="2" height="12" fill="#b08968"/>
+      <rect x="-5" y="0" width="2" height="12" fill="#b08968"/>
+      <rect x="5" y="0" width="2" height="12" fill="#b08968"/>
+      <rect x="10" y="0" width="2" height="12" fill="#b08968"/>
+      
+      <!-- Antlers -->
+      <path d="M12,-8 L18,-15 M12,-8 L14,-16" fill="none" stroke="#a17c5b" stroke-width="1.5"/>
+      
+      <!-- Eye -->
+      <circle cx="14" cy="-6" r="1" fill="#000"/>
+    </g>
+    
+    <!-- Second deer -->
+    <g transform="translate(20, 5) scale(0.7)">
+      <!-- Body -->
+      <ellipse cx="0" cy="0" rx="15" ry="8" fill="#c9ada7"/>
+      
+      <!-- Head -->
+      <circle cx="12" cy="-5" r="6" fill="#c9ada7"/>
+      
+      <!-- Legs -->
+      <rect x="-10" y="0" width="2" height="12" fill="#c9ada7"/>
+      <rect x="-5" y="0" width="2" height="12" fill="#c9ada7"/>
+      <rect x="5" y="0" width="2" height="12" fill="#c9ada7"/>
+      <rect x="10" y="0" width="2" height="12" fill="#c9ada7"/>
+      
+      <!-- Eye -->
+      <circle cx="14" cy="-6" r="1" fill="#000"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg width="128" height="112" viewBox="0 0 128 112" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon Path - mostly transparent -->
+  <path d="M64 0L128 32V80L64 112L0 80V32L64 0Z" fill="none"/>
+  
+  <!-- Minerals/crystals -->
+  <g transform="translate(64, 56)">
+    <!-- Crystal cluster 1 -->
+    <g transform="translate(-15, 0)">
+      <polygon points="0,0 -5,15 5,15" fill="#5e548e"/>
+      <polygon points="0,0 5,12 10,0" fill="#9f86c0"/>
+      <polygon points="0,0 -8,10 -12,0" fill="#231942"/>
+    </g>
+    
+    <!-- Crystal cluster 2 -->
+    <g transform="translate(15, 5)">
+      <polygon points="0,0 -3,10 3,10" fill="#5e548e"/>
+      <polygon points="0,0 4,8 7,0" fill="#9f86c0"/>
+      <polygon points="0,0 -5,7 -9,0" fill="#231942"/>
+    </g>
+    
+    <!-- Small crystal details -->
+    <rect x="-5" y="7" width="3" height="8" transform="rotate(15)" fill="#be95c4"/>
+    <rect x="7" y="-3" width="2" height="6" transform="rotate(-20)" fill="#be95c4"/>
+    
+    <!-- Shine effects -->
+    <line x1="0" y1="0" x2="3" y2="5" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-15" y1="5" x2="-12" y2="7" stroke="#ffffff" stroke-width="1"/>
+    <line x1="15" y1="0" x2="17" y2="3" stroke="#ffffff" stroke-width="1"/>
+  </g>
+</svg>

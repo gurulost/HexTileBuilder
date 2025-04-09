@@ -1,0 +1,20 @@
+<svg width="128" height="112" viewBox="0 0 128 112" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon Path -->
+  <path d="M64 0L128 32V80L64 112L0 80V32L64 0Z" fill="#e9c46a"/>
+  
+  <!-- Shading for 2.5D effect -->
+  <path d="M64 0L128 32V80L64 112V0Z" fill="#e6b74d" fill-opacity="0.3"/>
+  
+  <!-- Sand dune textures -->
+  <path d="M30,60 Q45,50 60,60 T90,60" fill="none" stroke="#dda832" stroke-width="3"/>
+  <path d="M40,75 Q55,65 70,75 T100,75" fill="none" stroke="#dda832" stroke-width="2"/>
+  
+  <!-- Sand details -->
+  <circle cx="35" cy="50" r="2" fill="#dda832"/>
+  <circle cx="60" cy="70" r="3" fill="#dda832"/>
+  <circle cx="85" cy="55" r="2" fill="#dda832"/>
+  <circle cx="45" cy="85" r="2" fill="#dda832"/>
+  
+  <!-- Outline -->
+  <path d="M64 0L128 32V80L64 112L0 80V32L64 0Z" fill="none" stroke="#e39d25" stroke-width="2"/>
+</svg>

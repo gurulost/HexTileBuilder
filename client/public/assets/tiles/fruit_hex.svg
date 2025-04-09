@@ -1,0 +1,25 @@
+<svg width="128" height="112" viewBox="0 0 128 112" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon Path - mostly transparent -->
+  <path d="M64 0L128 32V80L64 112L0 80V32L64 0Z" fill="none"/>
+  
+  <!-- Fruit tree -->
+  <g transform="translate(64, 56)">
+    <!-- Tree trunk -->
+    <rect x="-4" y="0" width="8" height="20" fill="#774936"/>
+    
+    <!-- Tree foliage -->
+    <circle cx="0" cy="-10" r="20" fill="#2d6a4f"/>
+    
+    <!-- Fruits (apples) -->
+    <circle cx="-12" cy="-15" r="5" fill="#e63946"/>
+    <circle cx="10" cy="-8" r="5" fill="#e63946"/>
+    <circle cx="-8" cy="0" r="5" fill="#e63946"/>
+    <circle cx="12" cy="-20" r="5" fill="#e63946"/>
+    
+    <!-- Highlights on fruits -->
+    <circle cx="-11" cy="-16" r="1" fill="#ffccd5"/>
+    <circle cx="11" cy="-9" r="1" fill="#ffccd5"/>
+    <circle cx="-7" cy="-1" r="1" fill="#ffccd5"/>
+    <circle cx="13" cy="-21" r="1" fill="#ffccd5"/>
+  </g>
+</svg>
